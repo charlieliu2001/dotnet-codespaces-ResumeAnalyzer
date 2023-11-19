@@ -4,46 +4,80 @@
 
 <PageTitle>Resume Analyzer</PageTitle>
 
-<h1>Enter your resume</h1>
+<div id="input" style="display: block;">
+    <h1>Enter your resume</h1>
+    <p>Please enter your information:</p>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td style="width: 20%;">Name: </td>
+                <td style="width: 60%px;">
+                    <input id="name" asp-for="name" style="width: 100%;" />
+                    <span asp-validation-for="name"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Skills: </td>
+                <td>
+                    <textarea id="skills" asp-for="skills" style="height: 50px; min-height: 50px; width: 100%;"></textarea>
+                    <span asp-validation-for="skills"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Experience: </td>
+                <td>
+                    <textarea id="experience" asp-for="experience" style="height: 100px; min-height: 100px; width: 100%;"></textarea>
+                    <span asp-validation-for="experience"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button id="submit_button" type="button" onclick="analyze()" class="button submit_button">Submit</button>
+</div>
 
-<p>Please enter your information:</p>
+<div id="submission" style="display: none;">
+    <h1>Provided information: </h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td style="width: 20%;">Name: </td>
+                <td style="width: 60%px;">
+                    <input id="subName" asp-for="name" style="width: 100%;" readonly/>
+                </td>
+            </tr>
+            <tr>
+                <td>Skills: </td>
+                <td>
+                    <textarea id="subSkills" asp-for="skills" style="height: 50px; min-height: 50px; width: 100%;" readonly></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>Experience: </td>
+                <td>
+                    <textarea id="subExp" asp-for="experience" style="height: 100px; min-height: 100px; width: 100%;" readonly></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>See something wrong?</p>
+    <button id="submit_button" type="button" onclick="editSubmission()" class="button submit_button">Edit information</button>
+</div>
 
-<table class="table">
-    <tbody>
-        <tr>
-            <td style="width: 20%;">Name: </td>
-            <td style="width: 60%px;">
-                <input id="name" asp-for="name" style="width: 100%;" />
-                <span asp-validation-for="name"></span>
-            </td>
-        </tr>
-        <tr>
-            <td>Skills: </td>
-            <td>
-                <textarea id="skills" asp-for="skills" style="height: 50px; min-height: 50px; width: 100%;"></textarea>
-                <span asp-validation-for="skills"></span>
-            </td>
-        </tr>
-        <tr>
-            <td>Experience: </td>
-            <td>
-                <textarea id="experience" asp-for="experience" style="height: 100px; min-height: 100px; width: 100%;"></textarea>
-                <span asp-validation-for="experience"></span>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<button id="submit_button" type="button" onclick="analyze()" class="button submit_button">Submit</button>
 
 <script language="JavaScript" type="text/javascript">
     function analyze(){
-        alert('Submit clicked');
         var name = document.getElementById("name").value;
         var skills = document.getElementById("skills").value;
         var experience = document.getElementById("experience").value;
-        alert(name);
-        alert(skills);
-        alert(experience);
+        document.getElementById("subName").value = name;
+        document.getElementById("subSkills").value = skills;
+        document.getElementById("subExp").value = experience;
+        document.getElementById("input").style.display = "none";
+        document.getElementById("submission").style.display = "block";
+    }
+    function editSubmission(){
+        document.getElementById("submission").style.display = "none";
+        document.getElementById("input").style.display = "block";
     }
 </script>
 
