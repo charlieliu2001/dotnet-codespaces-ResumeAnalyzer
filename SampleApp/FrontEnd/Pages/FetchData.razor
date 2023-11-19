@@ -86,6 +86,9 @@
     }
 
     function plot(skillCounts, skills_arr){
+        // Sort from largest to smallest
+        skills_arr.sort((a, b) => skillCounts[b] - skillCounts[a]);
+
         // Set the dimensions and margins of the graph
         const margin = {top: 30, right: 30, bottom: 70, left: 60},
             width = 460 - margin.left - margin.right,
@@ -93,44 +96,44 @@
 
         // Append the svg object to the body of the page
         const svg = d3.select("#chart")
-        .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
+            .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
 
         // X axis
         const x = d3.scaleBand()
-        .range([ 0, width ])
-        .domain(skills_arr)
-        .padding(0.2);
+            .range([ 0, width ])
+            .domain(skills_arr)
+            .padding(0.2);
 
         svg.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x))
-        .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", "rotate(-65)");
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("transform", "rotate(-65)");
 
         // Add Y axis
         const y = d3.scaleLinear()
-        .domain([0, d3.max(Object.values(skillCounts))])
-        .range([ height, 0]);
+            .domain([0, Math.ceil(d3.max(Object.values(skillCounts)))]) // Use Math.ceil to round up to the nearest whole number
+            .range([height, 0]);
 
         svg.append("g")
-        .call(d3.axisLeft(y));
+            .call(d3.axisLeft(y).ticks(Math.ceil(d3.max(Object.values(skillCounts)))).tickFormat(d3.format('d'))); // Use .ticks() with the maximum value
 
         // Bars
         svg.selectAll("mybar")
-        .data(skills_arr)
-        .join("rect")
-            .attr("x", d => x(d))
-            .attr("y", d => y(skillCounts[d]))
-            .attr("width", x.bandwidth())
-            .attr("height", d => height - y(skillCounts[d]))
-            .attr("fill", "#69b3a2");
+            .data(skills_arr)
+            .join("rect")
+                .attr("x", d => x(d))
+                .attr("y", d => y(skillCounts[d]))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(skillCounts[d]))
+                .attr("fill", "#69b3a2");
     }
 
     function analyze(){
@@ -144,7 +147,7 @@
         document.getElementById("submission").style.display = "block";
         const skills_arr = String(skills).split(",");
         const skillCounts = countSkills(skills_arr, String(experience));
-        alert(JSON.stringify(skillCounts));
+        // alert(JSON.stringify(skillCounts));
         plot(skillCounts, skills_arr);
     }
 
