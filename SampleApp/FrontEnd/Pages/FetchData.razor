@@ -2,40 +2,50 @@
 @using FrontEnd.Data
 @inject WeatherForecastClient ForecastClient
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle>Resume Analyzer</PageTitle>
 
-<h1>Weather forecast</h1>
+<h1>Enter your resume</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<p>Please enter your information:</p>
 
-@if (forecasts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<table class="table">
+    <tbody>
+        <tr>
+            <td style="width: 20%;">Name: </td>
+            <td style="width: 60%px;">
+                <input id="name" asp-for="name" style="width: 100%;" />
+                <span asp-validation-for="name"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Skills: </td>
+            <td>
+                <textarea id="skills" asp-for="skills" style="height: 50px; min-height: 50px; width: 100%;"></textarea>
+                <span asp-validation-for="skills"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Experience: </td>
+            <td>
+                <textarea id="experience" asp-for="experience" style="height: 100px; min-height: 100px; width: 100%;"></textarea>
+                <span asp-validation-for="experience"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<button id="submit_button" type="button" onclick="analyze()" class="button submit_button">Submit</button>
+
+<script language="JavaScript" type="text/javascript">
+    function analyze(){
+        alert('Submit clicked');
+        var name = document.getElementById("name").value;
+        var skills = document.getElementById("skills").value;
+        var experience = document.getElementById("experience").value;
+        alert(name);
+        alert(skills);
+        alert(experience);
+    }
+</script>
 
 @code {
     private WeatherForecast[]? forecasts;
@@ -45,3 +55,18 @@ else
         forecasts = await ForecastClient.GetForecastAsync(DateTime.Now);
     }
 }
+
+<style>
+    .submit_button {
+    transition-duration: 0.4s;
+    border-radius: 5px;
+    border-color: transparent;
+    background-color: #04AA6D; /* Green */
+    color: white;
+    }
+
+    .submit_button:hover {
+    background-color: #028051; /* Green */
+    color: white;
+    }
+</style>
