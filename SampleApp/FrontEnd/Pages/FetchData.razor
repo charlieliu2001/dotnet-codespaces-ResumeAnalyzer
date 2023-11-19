@@ -2,7 +2,8 @@
 @using FrontEnd.Data
 @inject WeatherForecastClient ForecastClient
 
-<script src="https://d3js.org/d3.v4.js"></script>
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
 
 <PageTitle>Resume Analyzer</PageTitle>
 
@@ -64,11 +65,11 @@
     <p>See something wrong?</p>
     <button id="submit_button" type="button" onclick="editSubmission()" class="button submit_button">Edit information</button>
 
-    <div id="my_dataviz"></div>
+    <div id="chart"></div>
 </div>
 
 
-<script language="JavaScript" type="text/javascript">
+<script>
     function countSkills(skills_arr, experience) {
         const skillCounts = {};
 
@@ -84,55 +85,52 @@
         return skillCounts;
     }
 
-    function plot(skills_data){
-        // set the dimensions and margins of the graph
-        var margin = {top: 30, right: 30, bottom: 70, left: 60},
+    function plot(skillCounts, skills_arr){
+        // Set the dimensions and margins of the graph
+        const margin = {top: 30, right: 30, bottom: 70, left: 60},
             width = 460 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
 
-        // append the svg object to the body of the page
-        var svg = d3.select("#my_dataviz")
+        // Append the svg object to the body of the page
+        const svg = d3.select("#chart")
         .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
         .append("g")
-            .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
-
-        // Parse the Data
-        d3.json(skills_data, function(data) {
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
         // X axis
-        var x = d3.scaleBand()
+        const x = d3.scaleBand()
         .range([ 0, width ])
-        .domain(data.map(function(d) { return d.Country; }))
+        .domain(skills_arr)
         .padding(0.2);
+
         svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x))
         .selectAll("text")
-            .attr("transform", "translate(-10,0)rotate(-45)")
-            .style("text-anchor", "end");
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
 
         // Add Y axis
-        var y = d3.scaleLinear()
-        .domain([0, 13000])
+        const y = d3.scaleLinear()
+        .domain([0, d3.max(Object.values(skillCounts))])
         .range([ height, 0]);
+
         svg.append("g")
         .call(d3.axisLeft(y));
 
         // Bars
         svg.selectAll("mybar")
-        .data(data)
-        .enter()
-        .append("rect")
-            .attr("x", function(d) { return x(d.Country); })
-            .attr("y", function(d) { return y(d.Value); })
+        .data(skills_arr)
+        .join("rect")
+            .attr("x", d => x(d))
+            .attr("y", d => y(skillCounts[d]))
             .attr("width", x.bandwidth())
-            .attr("height", function(d) { return height - y(d.Value); })
-            .attr("fill", "#69b3a2")
-
-        })
+            .attr("height", d => height - y(skillCounts[d]))
+            .attr("fill", "#69b3a2");
     }
 
     function analyze(){
@@ -145,9 +143,9 @@
         document.getElementById("input").style.display = "none";
         document.getElementById("submission").style.display = "block";
         const skills_arr = String(skills).split(",");
-        const skills_data = JSON.stringify(countSkills(skills_arr, String(experience)));
-        alert(skills_data);
-        plot(skills_data);
+        const skillCounts = countSkills(skills_arr, String(experience));
+        alert(JSON.stringify(skillCounts));
+        plot(skillCounts, skills_arr);
     }
 
     function editSubmission(){
