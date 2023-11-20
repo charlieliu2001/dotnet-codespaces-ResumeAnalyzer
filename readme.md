@@ -47,7 +47,8 @@ You can also run this repository locally by following these instructions:
 ![image](images/3.png)
 
 3. Click the Edit Information button to edit the provided information if needed, and resubmit.
-![image](images/demo.gif)
+![demofile](https://github.com/charlieliu2001/dotnet-codespaces-ResumeAnalyzer/blob/3f21f8a4ae78c565ba3cc88bc01e777848f5d2b3/images/demo.gif)
+
 
 ## Contributing
 
