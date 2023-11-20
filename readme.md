@@ -4,7 +4,8 @@ I wrote the frontend page on the GitHub .NET Codespace with razor.
 
 ## Overview
 
-This app takes in resume information, and uses the D3.js library to generate both a word cloud of the most frequently mentioned words and the top 5 most frequently mentioned technical skills.
+This app takes in resume information, and uses the [D3.js library](https://d3js.org/) to generate both a [word cloud](https://d3-graph-gallery.com/wordcloud.html) of the most frequently mentioned words and a [bar plot](https://d3-graph-gallery.com/barplot.html) of the top 5 most frequently mentioned technical skills.
+
 Because this is just the front end, the data doesn't actually get sent to the backend for any further processing. Everything is done on the razor page with html, css, and javascript.
 
 ### Run Options
