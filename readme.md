@@ -20,7 +20,7 @@ If the created codespace is stuck loading, close the tab and try to open it agai
 ## Getting started
 
 1. **📤 One-click setup**: opening the CodeSpace gives you a fully configured cloud developer environment.
-2. **▶️ Run all, one-click again**: Use VS Code's built-in *Run* command and open the forwarded ports *8080* and *8081* in your browser. 
+2. **▶️ Run all, one-click again**: Use VS Code's built-in *Run* command and open the forwarded port *8081* in your browser. 
 
 ![](images/RunAll.png)
 
