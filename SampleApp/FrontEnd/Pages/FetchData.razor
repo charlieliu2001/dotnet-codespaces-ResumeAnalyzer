@@ -34,7 +34,7 @@
         <div class="form-group">
             <label for="experience">Experience:</label>
             <textarea id="experience" asp-for="experience" class="form-control" placeholder="Enter any relevant experiences you want to share!"></textarea>
-            <span asp-validation-for="experience"></span>
+            <span id="expError" class="error-message" style="display: none;">No listed skills were mentioned in your experiences. You may want to double check.</span>
         </div>
 
         <button id="submit_button" type="button" onclick="analyze()" class="submit_button">Submit</button>
@@ -220,7 +220,15 @@
         return true; // Allow form submission
     }
 
-
+    function validateExperience(skillCounts){
+        if (Object.values(skillCounts).every(value => value === 0)){
+            // Means all values are 0, thus experience is suspicious.
+            document.getElementById("expError").style.display = "block";
+            return false;
+        }
+        document.getElementById("expError").style.display = "none";
+        return true;
+    }
 
     function analyze(){
         // Get the values of the resume information
@@ -235,6 +243,13 @@
             document.getElementById("skills").readOnly = true;
             document.getElementById("experience").readOnly = true;
 
+            // Count the skills instances in experience
+            const skills_arr = String(skills).split(",");
+            const skillCounts = countSkills(skills_arr, String(experience));
+
+            // Not a hard error. Could still be valid. Simply alert user to double check your input.
+            validateExperience(skillCounts);
+
             // Switch out the submit button for the edit one and show graphs
             document.getElementById("submit_button").style.display = "none";
             document.getElementById("edit_div").style.display = "block";
@@ -242,8 +257,6 @@
             // Switch title so user knows status
             document.getElementById("enter_data").style.display = "none";
             document.getElementById("data_recieved").style.display = "block";
-            const skills_arr = String(skills).split(",");
-            const skillCounts = countSkills(skills_arr, String(experience));
             
             // Make the visuals
             plot(skillCounts, skills_arr);
