@@ -8,8 +8,15 @@
 <PageTitle>Resume Analyzer</PageTitle>
 
 <div id="input" style="display: block;">
-    <h1>Enter your resume</h1>
-    <p>Please enter your information:</p>
+    <div id="enter_data">
+        <h1>Enter your resume</h1>
+        <p>Please enter your information:</p>
+    </div>
+    <div id="data_recieved" style="display: none">
+        <h1>Resume recieved!</h1>
+        <p>The information you entered is as follows:</p>
+    </div>
+
     <table class="table">
         <tbody>
             <tr>
@@ -36,38 +43,12 @@
         </tbody>
     </table>
     <button id="submit_button" type="button" onclick="analyze()" class="button submit_button">Submit</button>
+    <div id="edit_div" style="display: none;">
+        <p>See something wrong?</p>
+        <button id="edit_button" type="button" onclick="editSubmission()" class="button submit_button">Edit information</button>
+        <div id="chart"></div>
+    </div>
 </div>
-
-<div id="submission" style="display: none;">
-    <h1>Provided information: </h1>
-    <table class="table">
-        <tbody>
-            <tr>
-                <td style="width: 20%;">Name: </td>
-                <td style="width: 60%px;">
-                    <input id="subName" asp-for="name" style="width: 100%;" readonly/>
-                </td>
-            </tr>
-            <tr>
-                <td>Skills: </td>
-                <td>
-                    <textarea id="subSkills" asp-for="skills" style="height: 50px; min-height: 50px; width: 100%;" readonly></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>Experience: </td>
-                <td>
-                    <textarea id="subExp" asp-for="experience" style="height: 100px; min-height: 100px; width: 100%;" readonly></textarea>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <p>See something wrong?</p>
-    <button id="submit_button" type="button" onclick="editSubmission()" class="button submit_button">Edit information</button>
-
-    <div id="chart"></div>
-</div>
-
 
 <script>
     function countSkills(skills_arr, experience) {
@@ -86,6 +67,9 @@
     }
 
     function plot(skillCounts, skills_arr){
+        // Remove existing SVG if it exists
+        d3.select("#chart svg").remove();
+
         // Sort from largest to smallest
         skills_arr.sort((a, b) => skillCounts[b] - skillCounts[a]);
 
@@ -140,11 +124,13 @@
         const name = document.getElementById("name").value;
         const skills = document.getElementById("skills").value;
         const experience = document.getElementById("experience").value;
-        document.getElementById("subName").value = name;
-        document.getElementById("subSkills").value = skills;
-        document.getElementById("subExp").value = experience;
-        document.getElementById("input").style.display = "none";
-        document.getElementById("submission").style.display = "block";
+        document.getElementById("name").readOnly = true;
+        document.getElementById("skills").readOnly = true;
+        document.getElementById("experience").readOnly = true;
+        document.getElementById("submit_button").style.display = "none";
+        document.getElementById("edit_div").style.display = "block";
+        document.getElementById("enter_data").style.display = "none";
+        document.getElementById("data_recieved").style.display = "block";
         const skills_arr = String(skills).split(",");
         const skillCounts = countSkills(skills_arr, String(experience));
         // alert(JSON.stringify(skillCounts));
@@ -152,8 +138,13 @@
     }
 
     function editSubmission(){
-        document.getElementById("submission").style.display = "none";
-        document.getElementById("input").style.display = "block";
+        document.getElementById("submit_button").style.display = "block";
+        document.getElementById("edit_div").style.display = "none";
+        document.getElementById("name").readOnly = false;
+        document.getElementById("skills").readOnly = false;
+        document.getElementById("experience").readOnly = false;
+        document.getElementById("enter_data").style.display = "block";
+        document.getElementById("data_recieved").style.display = "none";
     }
 </script>
 
