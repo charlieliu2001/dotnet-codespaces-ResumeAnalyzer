@@ -4,6 +4,7 @@
 
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v6.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
 
 <PageTitle>Resume Analyzer</PageTitle>
 
@@ -46,8 +47,17 @@
     <div id="edit_div" style="display: none;">
         <p>See something wrong?</p>
         <button id="edit_button" type="button" onclick="editSubmission()" class="button submit_button">Edit information</button>
-        <h3>Your top 5 skills:</h3>
-        <div id="chart"></div>
+        <div class="plotcontainer">
+            <div>
+                <h3>Your most used words:</h3>
+                <div id="word-cloud"></div>
+            </div>
+            <div>
+                <h3>Your top 5 skills:</h3>
+                <div id="chart"></div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -121,6 +131,73 @@
                 .attr("x", 0);
     }
 
+    function createWordCloud(experience) {
+        // Use a regular expression that includes C# and C++ like patterns
+        let words = experience.match(/[\w#++]+/g);
+        let frequency = {};
+        words.forEach(word => {
+            word = word.toLowerCase(); // Convert to lower case
+            if (!frequency[word]) {
+                frequency[word] = 0;
+            }
+            frequency[word]++;
+        });
+
+        // Prepare data for the word cloud
+        let data = Object.keys(frequency).map(key => {
+            return {text: key, size: frequency[key]};
+        });
+
+        // Set up the dimensions for the word cloud
+        const margin = {top: 10, right: 30, bottom: 20, left: 100},
+            width = 460 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        // Function to scale word sizes
+        const sizeScale = d3.scaleLinear()
+            .domain([d3.min(data, d => d.size), d3.max(data, d => d.size)])
+            .range([10, 100]);
+
+        // Set up the word cloud layout
+        const layout = d3.layout.cloud()
+            .size([width, height])
+            .words(data)
+            .padding(5)
+            .rotate(() => ~~(Math.random() * 2) * 90)
+            .fontSize(d => sizeScale(d.size))
+            .on("end", draw);
+
+        // Function to draw the word cloud
+        function draw(words) {
+            // Remove existing SVG if it exists
+            d3.select("#word-cloud svg").remove();
+
+            const svg = d3.select("#word-cloud").append("svg")
+                .attr("width", layout.size()[0])
+                .attr("height", layout.size()[1])
+                .append("g")
+                .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")");
+
+            const text = svg.selectAll("text")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", "1px")
+                .style("fill", "#69b3a2")
+                .attr("text-anchor", "middle")
+                .attr("transform", "translate(0,0) rotate(0)")
+                .text(d => d.text);
+
+            // Animate the transition of each word to its final position and size
+            text.transition()
+                .duration(1000) // Duration of the animation in milliseconds
+                .style("font-size", d => d.size + "px")
+                .attr("transform", d => "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")");
+        }
+
+        // Start the word cloud layout
+        layout.start();
+    }
+
     function analyze(){
         const name = document.getElementById("name").value;
         const skills = document.getElementById("skills").value;
@@ -134,8 +211,10 @@
         document.getElementById("data_recieved").style.display = "block";
         const skills_arr = String(skills).split(",");
         const skillCounts = countSkills(skills_arr, String(experience));
+        
         // alert(JSON.stringify(skillCounts));
         plot(skillCounts, skills_arr);
+        createWordCloud(experience);
     }
 
     function editSubmission(){
@@ -170,5 +249,21 @@
     .submit_button:hover {
     background-color: #028051; /* Green */
     color: white;
+    }
+
+    .plotcontainer {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .plotcontainer > div {
+        flex: 1; /* Each child div takes up equal space */
+        margin: 10px;
+        padding: 10px;
+    }
+
+    #chart, #word-cloud {
+        width: 100%;
+        height: 400px; /* You can adjust this based on your needs */
     }
 </style>
