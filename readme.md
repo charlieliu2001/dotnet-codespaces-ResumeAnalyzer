@@ -1,14 +1,11 @@
 # Adanomad Resume Analyzer Challenge
 
-I wrote the frontend page on the GitHub .NET Codespace.
-
-This repo originally built a Weather API using Minimal APIs, opens Swagger so you can call and test the API, and displays the data in a web application using Blazor with .NET 8.
-
-I directly edited the frontend razor page to accomplish resume analysis.
+I wrote the frontend page on the GitHub .NET Codespace with razor.
 
 ## Overview
 
-This app takes in resume information, and generates both a word cloud of the most frequently mentioned words and the top 5 most frequently mentioned technical skills.
+This app takes in resume information, and uses the D3.js library to generate both a word cloud of the most frequently mentioned words and the top 5 most frequently mentioned technical skills.
+Because this is just the front end, the data doesn't actually get sent to the backend for any further processing. Everything is done on the razor page with html, css, and javascript.
 
 ### Run Options
 
