@@ -253,17 +253,31 @@
 
     .plotcontainer {
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: flex-start;
     }
 
     .plotcontainer > div {
-        flex: 1; /* Each child div takes up equal space */
-        margin: 10px;
+        margin: 10px 5px; /* Reduced horizontal margin */
         padding: 10px;
     }
 
     #chart, #word-cloud {
         width: 100%;
-        height: 400px; /* You can adjust this based on your needs */
+        height: 400px; /* Adjust as needed */
     }
+
+    /* Media query for smaller screens */
+    @@media (max-width: 650px) {
+        .plotcontainer > div {
+            /* Full width on smaller screens, to stack them vertically */
+            flex-basis: 100%;
+        }
+
+        .plotcontainer {
+            align-items: center; /* Center align items when they are stacked vertically */
+        }
+    }
+
 </style>
