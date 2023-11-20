@@ -14,6 +14,8 @@ This app takes in resume information, and generates both a word cloud of the mos
 
 Go to Code -> CodeSpaces and click on 'Create codespace on main' to open in the browser.
 
+If the created codespace is stuck loading, close the tab and try to open it again. This time, you should see the codespace you just created listed under 'CodeSpaces'. Click on it.
+
 ![](images/setup.png)
 
 ## Getting started
