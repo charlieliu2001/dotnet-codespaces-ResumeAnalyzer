@@ -47,7 +47,7 @@ You can also run this repository locally by following these instructions:
 ![image](images/3.png)
 
 3. Click the Edit Information button to edit the provided information if needed, and resubmit.
-
+![image](images/demo.gif)
 
 ## Contributing
 
