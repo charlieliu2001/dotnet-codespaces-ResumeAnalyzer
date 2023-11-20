@@ -22,13 +22,13 @@
         <div class="form-group">
             <label for="name">Name:</label>
             <input id="name" asp-for="name" class="form-control" />
-            <span asp-validation-for="name"></span>
+            <span id="nameError" class="error-message" style="display: none;">Please enter a valid name without characters other than apostrophes ('), and hyphens (-).</span>
         </div>
 
         <div class="form-group">
             <label for="skills">Skills:</label>
-            <textarea id="skills" asp-for="skills" class="form-control" placeholder="Please separate skills with commas."></textarea>
-            <span asp-validation-for="skills"></span>
+            <textarea id="skills" asp-for="skills" class="form-control" placeholder="Please enter skills as keywords separated by commas."></textarea>
+            <span id="skillsError" class="error-message" style="display: none;">Each skill should be less than 20 characters and not empty.</span>
         </div>
 
         <div class="form-group">
@@ -48,7 +48,7 @@
                     <div id="word-cloud"></div>
                 </div>
                 <div>
-                    <h3>Your top 5 skills:</h3>
+                    <h3>Your top skills:</h3>
                     <div id="chart"></div>
                 </div>
             </div>
@@ -193,30 +193,62 @@
         layout.start();
     }
 
+    function validateName(name){
+        // Regular expression for valid name characters
+        const regex = /^[a-zA-Z\s'-]+$/;
+
+        // Check if the string is not empty and matches the regular expression
+        if (name && regex.test(name)) {
+            document.getElementById("nameError").style.display = "none";
+            return true; // Valid name
+        } else {
+            document.getElementById("nameError").style.display = "block";
+            return false; // Invalid name
+        }
+    }
+
+    function validateSkills(skillsInput) {
+        const skills = skillsInput.split(",").map(skill => skill.trim());
+        const invalidSkills = skills.filter(skill => skill.length > 20 || skill.length === 0);
+
+        if (invalidSkills.length > 0) {
+            // Handle invalid skills (show error message or highlight the input)
+            document.getElementById("skillsError").style.display = "block";
+            return false; // Prevent form submission
+        }
+        document.getElementById("skillsError").style.display = "none";
+        return true; // Allow form submission
+    }
+
+
+
     function analyze(){
         // Get the values of the resume information
         const name = document.getElementById("name").value;
         const skills = document.getElementById("skills").value;
         const experience = document.getElementById("experience").value;
 
-        // Set the text boxes to read only
-        document.getElementById("name").readOnly = true;
-        document.getElementById("skills").readOnly = true;
-        document.getElementById("experience").readOnly = true;
+        // Validate - Change to && if you want to check in order and only show one at a time.
+        if(validateName(name) & validateSkills(skills)){
+            // Set the text boxes to read only
+            document.getElementById("name").readOnly = true;
+            document.getElementById("skills").readOnly = true;
+            document.getElementById("experience").readOnly = true;
 
-        // Switch out the submit button for the edit one and show graphs
-        document.getElementById("submit_button").style.display = "none";
-        document.getElementById("edit_div").style.display = "block";
+            // Switch out the submit button for the edit one and show graphs
+            document.getElementById("submit_button").style.display = "none";
+            document.getElementById("edit_div").style.display = "block";
 
-        // Switch title so user knows status
-        document.getElementById("enter_data").style.display = "none";
-        document.getElementById("data_recieved").style.display = "block";
-        const skills_arr = String(skills).split(",");
-        const skillCounts = countSkills(skills_arr, String(experience));
-        
-        // Make the visuals
-        plot(skillCounts, skills_arr);
-        createWordCloud(experience);
+            // Switch title so user knows status
+            document.getElementById("enter_data").style.display = "none";
+            document.getElementById("data_recieved").style.display = "block";
+            const skills_arr = String(skills).split(",");
+            const skillCounts = countSkills(skills_arr, String(experience));
+            
+            // Make the visuals
+            plot(skillCounts, skills_arr);
+            createWordCloud(experience);
+        }
     }
 
     function editSubmission(){
@@ -305,6 +337,11 @@
     #chart, #word-cloud {
         width: 100%;
         height: 400px;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 0.8em;
     }
 
     /* Media query for smaller screens */
