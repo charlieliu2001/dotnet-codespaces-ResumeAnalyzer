@@ -12,11 +12,14 @@ This app takes in resume information, and generates both a word cloud of the mos
 
 ### Run Options
 
-[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=lightgrey&logo=github)](https://codespaces.new/github/dotnet-codespaces)
-[![Open in Dev Container](https://img.shields.io/static/v1?style=for-the-badge&label=Dev+Container&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/github/dotnet-codespaces)
+[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=lightgrey&logo=github)](https://scaling-halibut-7pvp5qp4j7r2xrj6.github.dev/)
+
+or go to Code -> CodeSpaces and click on the scaling halibut codespace to open in the browser.
+
+![](images/open.png)
 
 You can also run this repository locally by following these instructions: 
-1. Clone the repo to your local machine `git clone https://github.com/bradygaster/dotnet-codespace`
+1. Clone the repo to your local machine `git clone https://github.com/charlieliu2001/dotnet-codespaces-ResumeAnalyzer.git`
 1. Open repo in VS Code
 
 ## Getting started
