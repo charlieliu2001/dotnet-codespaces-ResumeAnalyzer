@@ -194,30 +194,42 @@
     }
 
     function analyze(){
+        // Get the values of the resume information
         const name = document.getElementById("name").value;
         const skills = document.getElementById("skills").value;
         const experience = document.getElementById("experience").value;
+
+        // Set the text boxes to read only
         document.getElementById("name").readOnly = true;
         document.getElementById("skills").readOnly = true;
         document.getElementById("experience").readOnly = true;
+
+        // Switch out the submit button for the edit one and show graphs
         document.getElementById("submit_button").style.display = "none";
         document.getElementById("edit_div").style.display = "block";
+
+        // Switch title so user knows status
         document.getElementById("enter_data").style.display = "none";
         document.getElementById("data_recieved").style.display = "block";
         const skills_arr = String(skills).split(",");
         const skillCounts = countSkills(skills_arr, String(experience));
         
-        // alert(JSON.stringify(skillCounts));
+        // Make the visuals
         plot(skillCounts, skills_arr);
         createWordCloud(experience);
     }
 
     function editSubmission(){
+        // Switch out the edit button for the submit one and hide graphs
         document.getElementById("submit_button").style.display = "block";
         document.getElementById("edit_div").style.display = "none";
+
+        // Make textboxes editable again
         document.getElementById("name").readOnly = false;
         document.getElementById("skills").readOnly = false;
         document.getElementById("experience").readOnly = false;
+
+        // Switch title so user knows status
         document.getElementById("enter_data").style.display = "block";
         document.getElementById("data_recieved").style.display = "none";
     }
