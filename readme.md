@@ -12,24 +12,18 @@ This app takes in resume information, and generates both a word cloud of the mos
 
 ### Run Options
 
-[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=lightgrey&logo=github)](https://scaling-halibut-7pvp5qp4j7r2xrj6.github.dev/)
+Go to Code -> CodeSpaces and click on 'Create codespace on main' to open in the browser.
 
-or go to Code -> CodeSpaces and click on the scaling halibut codespace to open in the browser.
-
-![](images/open.png)
-
-You can also run this repository locally by following these instructions: 
-1. Clone the repo to your local machine `git clone https://github.com/charlieliu2001/dotnet-codespaces-ResumeAnalyzer.git`
-1. Open repo in VS Code
+![](images/setup.png)
 
 ## Getting started
 
-1. **📤 One-click setup**: [Open a new Codespace](https://codespaces.new/github/dotnet-codespaces), giving you a fully configured cloud developer environment.
+1. **📤 One-click setup**: opening the CodeSpace gives you a fully configured cloud developer environment.
 2. **▶️ Run all, one-click again**: Use VS Code's built-in *Run* command and open the forwarded ports *8080* and *8081* in your browser. 
 
 ![](images/RunAll.png)
 
-3. Go to ports and click on the globe to open the front end.
+3. If it doesn't open automatically, go to ports and click on the globe to open the front end.
 ![](images/how_to_run.png)
 
 4. The Blazor web app should now be open on your browser. 
