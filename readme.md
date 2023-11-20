@@ -1,12 +1,14 @@
-# GitHub Codespaces ♥️ .NET 8
+# Adanomad Resume Analyzer Challenge
 
-Want to try out the latest performance improvements coming with .NET 8 for web development? 
+I wrote the frontend page on the GitHub .NET Codespace.
 
-This repo builds a Weather API using Minimal APIs, opens Swagger so you can call and test the API, and displays the data in a web application using Blazor with .NET 8. 
+This repo originally built a Weather API using Minimal APIs, opens Swagger so you can call and test the API, and displays the data in a web application using Blazor with .NET 8.
 
-We've given you both a frontend and backend to play around with and where you go from here is up to you!
+I directly edited the frontend razor page to accomplish resume analysis.
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+## Overview
+
+This app takes in resume information, and generates both a word cloud of the most frequently mentioned words and the top 5 most frequently mentioned technical skills.
 
 ### Run Options
 
@@ -24,17 +26,24 @@ You can also run this repository locally by following these instructions:
 
 ![](images/RunAll.png)
 
-3. The Blazor web app and Swagger tabs should now be open on your browser. On Swagger, click "Try it out" and "Execute" to call and test the API. 
+3. The Blazor web app should now be open on your browser. 
 
-![](images/BlazorApp.png)
-![](images/Swagger.png)
+![image](https://github.com/charlieliu2001/dotnet-codespaces-ResumeAnalyzer/assets/43513073/3279b46d-fb24-4598-bbb8-6fd9c12b911b)
 
-
-4. **🔄 Iterate quickly:** Codespaces updates the server on each save, and VS Code's debugger lets you dig into the code execution.
-
-5. To stop running, return to VS Code, and click Stop twice in the debug toolbar. 
+4. To stop running, return to VS Code, and click Stop twice in the debug toolbar. 
 
 ![](images/StopRun.png)
+
+
+## Usage
+
+1. Enter in the resume information.
+![image](https://github.com/charlieliu2001/dotnet-codespaces-ResumeAnalyzer/assets/43513073/49ee0e9f-fd67-4b08-b329-2675edaac897)
+
+2. Press submit and see the magic happen.
+![image](https://github.com/charlieliu2001/dotnet-codespaces-ResumeAnalyzer/assets/43513073/f86a9dd2-5f83-4bdd-81fb-6ee9f8893bc7)
+
+3. Click the Edit Information button to edit the provided information if needed, and resubmit.
 
 
 ## Contributing
