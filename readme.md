@@ -26,11 +26,14 @@ You can also run this repository locally by following these instructions:
 
 ![](images/RunAll.png)
 
-3. The Blazor web app should now be open on your browser. 
+3. Go to ports and click on the globe to open the front end.
+![](images/how_to_run.png)
 
-![image](https://github.com/charlieliu2001/dotnet-codespaces-ResumeAnalyzer/assets/43513073/3279b46d-fb24-4598-bbb8-6fd9c12b911b)
+4. The Blazor web app should now be open on your browser. 
 
-4. To stop running, return to VS Code, and click Stop twice in the debug toolbar. 
+![image](images/1.png)
+
+5. To stop running, return to VS Code, and click Stop twice in the debug toolbar. 
 
 ![](images/StopRun.png)
 
@@ -38,10 +41,10 @@ You can also run this repository locally by following these instructions:
 ## Usage
 
 1. Enter in the resume information.
-![image](https://github.com/charlieliu2001/dotnet-codespaces-ResumeAnalyzer/assets/43513073/49ee0e9f-fd67-4b08-b329-2675edaac897)
+![image](images/2.png)
 
 2. Press submit and see the magic happen.
-![image](https://github.com/charlieliu2001/dotnet-codespaces-ResumeAnalyzer/assets/43513073/f86a9dd2-5f83-4bdd-81fb-6ee9f8893bc7)
+![image](images/3.png)
 
 3. Click the Edit Information button to edit the provided information if needed, and resubmit.
 
